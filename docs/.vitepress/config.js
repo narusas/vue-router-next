@@ -83,85 +83,85 @@ const config = {
                 link: '/guide/',
               },
               {
-                text: 'Dynamic Route Matching',
+                text: '동적 라우트 매칭',
                 link: '/guide/essentials/dynamic-matching.html',
               },
               {
-                text: "Routes' Matching Syntax",
+                text: '라우트 매칭 문법',
                 link: '/guide/essentials/route-matching-syntax.html',
               },
               {
-                text: 'Nested Routes',
+                text: '중첩된 라우트',
                 link: '/guide/essentials/nested-routes.html',
               },
               {
-                text: 'Programmatic Navigation',
+                text: '프로그래밍 방식 라우트',
                 link: '/guide/essentials/navigation.html',
               },
               {
-                text: 'Named Routes',
+                text: '이름을 가지는 라우트',
                 link: '/guide/essentials/named-routes.html',
               },
               {
-                text: 'Named Views',
+                text: '이름을 가지는 뷰',
                 link: '/guide/essentials/named-views.html',
               },
               {
-                text: 'Redirect and Alias',
+                text: '리다이렉트와 별칭',
                 link: '/guide/essentials/redirect-and-alias.html',
               },
               {
-                text: 'Passing Props to Route Components',
+                text: '라우트 컴포넌트에 속성 전달',
                 link: '/guide/essentials/passing-props.html',
               },
               {
-                text: 'Different History modes',
+                text: '다양한 히스토리 모드',
                 link: '/guide/essentials/history-mode.html',
               },
             ],
           },
           {
-            text: 'Advanced',
+            text: '고급 사용법',
             collapsable: false,
             children: [
               {
-                text: 'Navigation guards',
+                text: '네비게이션 가드',
                 link: '/guide/advanced/navigation-guards.html',
               },
               {
-                text: 'Route Meta Fields',
+                text: '라우트 메타 필드',
                 link: '/guide/advanced/meta.html',
               },
               {
-                text: 'Data Fetching',
+                text: '데이터 가져오기',
                 link: '/guide/advanced/data-fetching.html',
               },
               {
-                text: 'Composition API',
+                text: '컴포지션 API',
                 link: '/guide/advanced/composition-api.html',
               },
               {
-                text: 'Transitions',
+                text: '트랜지션',
                 link: '/guide/advanced/transitions.html',
               },
               {
-                text: 'Scroll Behavior',
+                text: '스크롤 동작',
                 link: '/guide/advanced/scroll-behavior.html',
               },
               {
-                text: 'Lazy Loading Routes',
+                text: '지연된 로딩',
                 link: '/guide/advanced/lazy-loading.html',
               },
               {
-                text: 'Extending RouterLink',
+                text: 'RouterLink 확장하기',
                 link: '/guide/advanced/extending-router-link.html',
               },
               {
-                text: 'Navigation Failures',
+                text: '네비게이션 실패처리',
                 link: '/guide/advanced/navigation-failures.html',
               },
               {
-                text: 'Dynamic Routing',
+                text: '동적 라우팅',
                 link: '/guide/advanced/dynamic-routing.html',
               },
             ],

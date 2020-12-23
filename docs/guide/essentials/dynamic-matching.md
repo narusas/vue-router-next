@@ -1,22 +1,24 @@
-# Dynamic Route Matching with Params
+# 파라메터를 동반한 동적 경로(Route) 매핑
 
-Very often we will need to map routes with the given pattern to the same component. For example we may have a `User` component which should be rendered for all users but with different user IDs. In Vue Router we can use a dynamic segment in the path to achieve that, we call that a _param_:
+매우 자주 주어진 패턴의 경로를 동일한 컴포넌트에 매핑해야합니다. 예를 들어 모든 사용자에 대해 렌더링 되어야 하지만, 사용자 ID가 다른 `User` 컴포넌트가 있을 수 있습니다. Vue Router에서는 이를 위해 경로에 동적 세그먼트를 사용할 수 있으며 이를 _param_이라고 합니다:
 
 ```js
 const User = {
   template: '<div>User</div>',
 }
 
-// these are passed to `createRouter`
+// 다음 옵션을 `createRouter`에 전달합니다 
 const routes = [
-  // dynamic segments start with a colon
+  // 동적 세그먼트는 콜론(:)으로 시작합니다. 
   { path: '/users/:id', component: User },
 ]
 ```
 
-Now URLs like `/users/johnny` and `/users/jolyne` will both map to the same route.
+ 이제 `/users/johnny` 와  `/users/jolyne` 같은 URL들은 모두 동일한 경로에 매핑됩니다.
 
 A _param_ is denoted by a colon `:`. When a route is matched, the value of its _params_ will be exposed as `this.$route.params` in every component. Therefore, we can render the current user ID by updating `User`'s template to this:
+
+_param_은 콜론 `:`으로 표시됩니다. 경로가 일치하면 _params_의 값이 모든 구성 요소에서 `this.$route.params`에 전달됩니다. 따라서 `User`의 템플릿을 다음과 같이 업데이트하여 현재 사용자 ID를 렌더링 할 수 있습니다.
 
 ```js
 const User = {
@@ -24,16 +26,16 @@ const User = {
 }
 ```
 
-You can have multiple _params_ in the same route, and they will map to corresponding fields on `$route.params`. Examples:
+동일한 경로에 여러 _params_가 있을 수 있으며 `$route.params`의 해당 필드에 매핑됩니다. 예제:
 
 | pattern                        | matched path             | \$route.params                           |
 | ------------------------------ | ------------------------ | ---------------------------------------- |
 | /users/:username               | /users/eduardo           | `{ username: 'eduardo' }`                |
 | /users/:username/posts/:postId | /users/eduardo/posts/123 | `{ username: 'eduardo', postId: '123' }` |
 
-In addition to `$route.params`, the `$route` object also exposes other useful information such as `$route.query` (if there is a query in the URL), `$route.hash`, etc. You can check out the full details in the [API Reference](/api/#routelocationnormalized).
+`$route.params` 외에도 `$ route` 객체는 `$route.query` (URL에 쿼리가있는 경우), `$route.hash` 등과 같은 다른 유용한 정보도 제공합니다. 자세한 내용은 [API 레퍼런스] (/api/#routelocationnormalized)에서 확인할 수 있습니다.
 
-A working demo of this example can be found [here](https://codesandbox.io/s/route-params-vue-router-examples-mlb14?from-embed&initialpath=%2Fusers%2Feduardo%2Fposts%2F1).
+동작하는 데모는 다음에서 보실수 있습니다. [여기](https://codesandbox.io/s/route-params-vue-router-examples-mlb14?from-embed&initialpath=%2Fusers%2Feduardo%2Fposts%2F1).
 
 <!-- <iframe
   src="https://codesandbox.io/embed//route-params-vue-router-examples-mlb14?fontsize=14&theme=light&view=preview&initialpath=%2Fusers%2Feduardo%2Fposts%2F1"
@@ -43,11 +45,11 @@ A working demo of this example can be found [here](https://codesandbox.io/s/rout
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
 ></iframe> -->
 
-## Reacting to Params Changes
+## Param 변경에 대응하기
 
-One thing to note when using routes with params is that when the user navigates from `/users/johnny` to `/users/jolyne`, **the same component instance will be reused**. Since both routes render the same component, this is more efficient than destroying the old instance and then creating a new one. **However, this also means that the lifecycle hooks of the component will not be called**.
+매개 변수와 함께 경로를 사용할 때주의해야 할 점은 사용자가 `/users/johnny`에서 `/users/jolyne`으로 이동할 때 **동일한 컴포넌트 인스턴스가 재사용된다는 것입니다**. 두 경로 모두 동일한 구성 요소를 렌더링하므로 이전 인스턴스를 삭제 한 다음 새 인스턴스를 만드는 것보다 기존의 것을 재사용하는것이 효율적입니다. **그러나 이는 컴포넌트우의 라이브사이클 후크가 호출되지 않음을 의미합니다**.
 
-To react to params changes in the same component, you can simply watch anything on the `$route` object, in this scenario, the `$route.params`:
+동일한 컴포넌트의 매개 변수 변경에 반응하려면 `$route` 객체의 적절한 속성을 watch 하면 됩니다.(이 시나리오에서는 `$route.params`)
 
 ```js
 const User = {
@@ -56,39 +58,42 @@ const User = {
     this.$watch(
       () => this.$route.params,
       (toParams, previousParams) => {
-        // react to route changes...
+        // 경로 변경에 대응...
       }
     )
   },
 }
 ```
 
-Or, use the `beforeRouteUpdate` [navigation guard](../advanced/navigation-guards.md), which also allows to cancel the navigation:
+또는 `beforeRouteUpdate` [네비게이션 가드](../advanced/navigation-guards.md)를 이용할수도 있습니다. 여기에서는 네비게이션을 취소 시킬수도 있습니다. 
 
 ```js
 const User = {
   template: '...',
   async beforeRouteUpdate(to, from) {
-    // react to route changes...
+    // 경로 변경에 대응...
     this.userData = await fetchUser(to.params.id)
   },
 }
 ```
 
-## Catch all / 404 Not found Route
+## 모든 오류 잡기 / 404 Not found 대응
 
 Regular params will only match characters in between url fragments, separated by `/`. If we want to match **anything**, we can use a custom _param_ regexp by adding the regexp inside parentheses right after the _param_:
 
+
+일반 params 는 '/'로 구분 된 URL 조각 사이의 문자와 만 일치합니다. **모든 항목**을 일치 시키려면 _param_ 바로 뒤에 괄호 안에 regexp를 추가하여 사용자 정의 _param_ regexp를 사용할 수 있습니다.
+
 ```js
 const routes = [
-  // will match everything and put it under `$route.params.pathMatch`
+  // 모든 경로에 매칭되되고, 매칭된 경로 정보를 `$route.params.pathMatch` 에 넣습니다. 
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-  // will match anything starting with `/user-` and put it under `$route.params.afterUser`
+  // `/user-`로 시작하는 모든 경오에 매칭되고, 매칭된 경로정보를 `$route.params.afterUser`에 넣습니다 
   { path: '/user-:afterUser(.*)', component: UserGeneric },
 ]
 ```
+이 시나리오에서 괄호 사이에 [커스텀 정규표현식](/guide/essentials/route-matching-syntax.md#custom-regexp-in-params)를 사용하여, `pathMatch` param을 [선택적 반복](/guide/essentials/route-matching-syntax.md#optional-parameters)으로 만들수 있습니다. 이것은 `path`를 배열로 분할하여 필요한 경우 경로로 직접 이동할 수 있도록 하기 위한 것입니다.
 
-In this specific scenario we are using a [custom regexp](/guide/essentials/route-matching-syntax.md#custom-regexp-in-params) between parentheses and marking the `pathMatch` param as [optionally repeatable](/guide/essentials/route-matching-syntax.md#optional-parameters). This is to allows us to directly navigate to the route if we need to by splitting the `path` into an array:
 
 ```js
 this.$router.push({
@@ -97,10 +102,11 @@ this.$router.push({
 })
 ```
 
-See more in the [repeated params](/guide/essentials/route-matching-syntax.md#repeatable-params) section.
+자세한 사항은 [반복된 params](/guide/essentials/route-matching-syntax.md#repeatable-params) 섹션을 참고 하세요. 
 
-If you are using [History mode](./history-mode.md), make sure to follow the instructions to correctly configure your server as well.
+[히스토리 모드](./history-mode.md)를 사용하는 경우 지침에 따라 서버를 올바르게 구성해야합니다.
 
-## Advanced Matching Patterns
 
-Vue Router uses its own path matching syntax, inspired by the one used by `express`, so it supports many advanced matching patterns such as optional params, zero or more / one or more requirements, and even custom regex patterns. Please check the [Advanced Matching](./route-matching-syntax.md) documentation to explore them.
+## 고급 매칭 패턴
+
+Vue Router는 `express`에서 영감을 얻은 자체 경로 일치 문법을 사용합니다. 선택적 매개 변수, 0개 이상/하나 이상의 요구 사항, 심지어 사용자 지정 정규식 패턴과 같은 많은 고급 일치 패턴을 지원합니다. [Advanced Matching](./route-matching-syntax.md) 문서를 확인하세요.
